@@ -1,26 +1,29 @@
-<div class="sidebar">
-  <a class="active" href="#dashboard">Home</a>
+<img *ngIf="isLoading" class="centered" src="assets/images/loading.png">
+
+<div *ngIf="!isLoading" class="sidebar">
+  <a class="active" href="#dashboard">Dashboard</a>
 </div> 
-<div class="flex">
-<div class="search">
-<input class="search-box" name="value" placeholder="Search..." [(ngModel)]="searchNews" (keyup)="filterNewsCards()">
+<div *ngIf="!isLoading" class="flex">
+  <div class="search">
+    <input class="search-box" name="value" placeholder="Search..." [(ngModel)]="searchNews" (keyup)="filterNewsCards()">
+  </div>
+  <div>
+    <label class="switch">
+      <input (click)="sortNewsCards()" type="checkbox" checked>
+        <span class="slider round"></span>
+    </label>
+  </div>
 </div>
-<div>
-  <label class="switch">
-    <input (click)="sortNewsCards()" type="checkbox" checked>
-    <span class="slider round"></span>
-  </label>
-</div>
-</div>
-<div class="content">
+
+<div *ngIf="!isLoading" class="content">
   <main class="cards">
     <article *ngFor="let news of footballNews | paginate: { itemsPerPage: 10, currentPage: p, totalItems: total}" class="card">
       <img [src]="news.thumbnails.high.url" alt="Sample photo">
-      <div class="text">
-        <h3><strong>{{news?.title || '-'}}</strong></h3>
-        <p><b>{{news?.description || '-'}}</b></p>
-        <button><strong>{{news?.published_datetime || '-' | date:'fullDate'}}</strong></button>
-      </div>
+        <div class="text">
+          <h3><strong>{{news?.title || '-'}}</strong></h3>
+          <p><b>{{news?.description || '-'}}</b></p>
+          <button><strong>{{news?.published_datetime || '-' | date:'fullDate'}}</strong></button>
+        </div>
     </article>
   </main>
   <pagination-controls (pageChange)="pageChange($event)"> </pagination-controls>

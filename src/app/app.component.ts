@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import * as _ from 'lodash'; 
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -15,14 +16,15 @@ export class AppComponent {
   public p: any;
   public limit:any = 10;
   public total:any = 10;
+  public isLoading: any = true;
 
-  constructor(private http:HttpClient) {
-   }
+  constructor(private http:HttpClient) {}
 
   ngOnInit() {
     this.http.get(this.baseUrl+"getAll")
     .subscribe((res:any)=>{
       this.footballNews = res.response.result.video;
+      this.isLoading = false;
     })
   }
 
